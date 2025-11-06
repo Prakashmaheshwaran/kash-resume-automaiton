@@ -19,14 +19,30 @@ async function loadConfig() {
 loadConfig();
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  console.log('Background script: Received message:', request);
+  console.log('Background script: Sender:', sender);
+  
   if (request.action === 'downloadPDF') {
+    console.log('Background script: Handling downloadPDF action');
+    console.log('Background script: Data received:', {
+      url: request.data?.url,
+      textLength: request.data?.text?.length,
+      webhook: request.data?.webhook
+    });
     handlePDFDownload(request.data, sendResponse);
     return true; // Keep message channel open for async response
   }
   if (request.action === 'downloadCoverLetter') {
+    console.log('Background script: Handling downloadCoverLetter action');
+    console.log('Background script: Data received:', {
+      url: request.data?.url,
+      webhook: request.data?.webhook
+    });
     handleCoverLetterDownload(request.data, sendResponse);
     return true; // Keep message channel open for async response
   }
+  
+  console.warn('Background script: Unknown action:', request.action);
 });
 
 async function handlePDFDownload(data, sendResponse) {
