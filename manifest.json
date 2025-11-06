@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Auto Resume Generator",
+  "version": "2.4",
+  "description": "Extract page content and generate PDF resume",
+  "permissions": [
+    "activeTab",
+    "downloads",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Generate Resume",
+    "default_icon": {
+      "16": "svg/icon.svg",
+      "48": "svg/icon.svg",
+      "128": "svg/icon.svg"
+    }
+  },
+  "icons": {
+    "16": "svg/icon.svg",
+    "48": "svg/icon.svg",
+    "128": "svg/icon.svg"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js", "floating-buttons.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["config.json"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
